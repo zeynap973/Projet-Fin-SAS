@@ -42,15 +42,24 @@ function ajouterPlusCandidats(candidats){
 //3-Afficher la liste des candidats
 
 function afficherCandidats(candidats){
-    
-    for(const personne of candidats){
-        console.log(`
-            -cin: ${personne.cin}
-            -nom: ${personne.nom}
-            -prenom: ${personne.prenom}
-            -partiPolitique: ${personne.partiPolitique}
-            -age: ${personne.age}
-            -Nombre de votes: ${personne.electeurs.length}`)
+
+    function filtrerCandidats(candidats){
+        const partiEntré = prompt("Réentrer le parti politique du candidat: ")
+    }
+
+
+    if (candidats.length === 0){
+        console.log("Aucun candidat n'existe dans la liste.")
+    } else {
+        for(const personne of candidats){
+            console.log(`
+                -cin: ${personne.cin}
+                -nom: ${personne.nom}
+                -prenom: ${personne.prenom}
+                -partiPolitique: ${personne.partiPolitique}
+                -age: ${personne.age}
+                -Nombre de votes: ${personne.electeurs.length}`)
+        }
     }
 }
 
@@ -64,7 +73,7 @@ function Menu(candidats){
         choix = Number(prompt(`
             1- Ajouter un candidat
             2- Ajouter plusieurs candidats
-            3- Afficher les listes des candidats
+            3- Afficher la liste des candidats
             4- quitter
     
             Bonjour, veuillez Entrer le numéro de votre choix: `))
