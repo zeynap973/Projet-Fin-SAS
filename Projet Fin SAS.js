@@ -41,24 +41,64 @@ function ajouterPlusCandidats(candidats){
 
 //3-Afficher la liste des candidats
 
-function afficherCandidats(candidats){
+//3-Afficher la liste des candidats
 
-    function filtrerCandidats(candidats){
-        const partiEntré = prompt("Réentrer le parti politique du candidat: ")
-    }
-
-
-    if (candidats.length === 0){
-        console.log("Aucun candidat n'existe dans la liste.")
+function afficherCandidats(candidats) {
+    
+    if (candidats.length === 0) {
+        console.log("Aucun candidat n'existe dans la liste.");
+        return;
     } else {
-        for(const personne of candidats){
-            console.log(`
-                -cin: ${personne.cin}
-                -nom: ${personne.nom}
-                -prenom: ${personne.prenom}
-                -partiPolitique: ${personne.partiPolitique}
-                -age: ${personne.age}
-                -Nombre de votes: ${personne.electeurs.length}`)
+
+        const choixAffichage = Number(prompt(`
+            1- Trier par nombre de votes
+            2- Filtrer par parti politique
+
+            Entrer votre choix: `));
+
+        let listeFiltre = candidats;
+
+        switch (choixAffichage) {
+
+            case 1:
+                for (let i = 0; i < listeFiltre.length - 1; i++) {
+
+                    for (let j = 0; j < listeFiltre.length - 1 - i; j++) {
+
+                        if (listeFiltre[j].nombreVotes < listeFiltre[j + 1].nombreVotes) {
+
+                            let temp = listeFiltre[j];
+                            listeFiltre[j] = listeFiltre[j + 1];
+                            listeFiltre[j + 1] = temp;
+                        }
+                    }
+                }
+
+                break;
+
+            case 2:
+
+                const partiRecherche = prompt("Entrer le parti politique: ");
+
+                listeFiltre = candidats.filter(personne => {
+                    return personne.partiPolitique === partiRecherche;
+                });
+
+                break;
+
+            default:
+                console.log("Choix invalide.");
+                return;
+        }
+
+        for (let personne of listeFiltre) {
+            console.log(
+                personne.nom,
+                "| Parti:",
+                personne.partiPolitique,
+                "| Votes:",
+                personne.nombreVotes
+            );
         }
     }
 }
