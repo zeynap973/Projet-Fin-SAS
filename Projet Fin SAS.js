@@ -41,13 +41,11 @@ function ajouterPlusCandidats(candidats){
 
 //3-Afficher la liste des candidats
 
-//3-Afficher la liste des candidats
-
 function afficherCandidats(candidats) {
     
     if (candidats.length === 0) {
         console.log("Aucun candidat n'existe dans la liste.");
-        return;
+
     } else {
 
         const choixAffichage = Number(prompt(`
@@ -62,28 +60,21 @@ function afficherCandidats(candidats) {
 
             case 1:
                 for (let i = 0; i < listeFiltre.length - 1; i++) {
-
-                    for (let j = 0; j < listeFiltre.length - 1 - i; j++) {
-
-                        if (listeFiltre[j].nombreVotes < listeFiltre[j + 1].nombreVotes) {
-
-                            let temp = listeFiltre[j];
-                            listeFiltre[j] = listeFiltre[j + 1];
-                            listeFiltre[j + 1] = temp;
+                        for (let j = 0; j < listeFiltre.length - 1 - i; j++) {
+                            if (listeFiltre[j].nombreVotes < listeFiltre[j + 1].nombreVotes) {
+                                    let temp = listeFiltre[j];
+                                    listeFiltre[j] = listeFiltre[j + 1];
+                                    listeFiltre[j + 1] = temp;
+                            }   
                         }
                     }
-                }
 
-                break;
+                    break;
 
             case 2:
-
                 const partiRecherche = prompt("Entrer le parti politique: ");
-
-                listeFiltre = candidats.filter(personne => {
-                    return personne.partiPolitique === partiRecherche;
+                listeFiltre = candidats.filter(personne => {return personne.partiPolitique === partiRecherche;
                 });
-
                 break;
 
             default:
@@ -92,20 +83,27 @@ function afficherCandidats(candidats) {
         }
 
         for (let personne of listeFiltre) {
-            console.log(
-                personne.nom,
-                "| Parti:",
-                personne.partiPolitique,
-                "| Votes:",
-                personne.nombreVotes
-            );
-        }
+            console.log(`
+                ${personne.nom}
+                Parti:
+                ${personne.partiPolitique}
+                Votes:
+                ${personne.nombreVotes}`)
+        }   
     }
 }
 
 //-Le menu principal:
 
 function Menu(candidats){
+
+    console.log(`
+        
+            1- Ajouter un candidat
+            2- Ajouter plusieurs candidats
+            3- Afficher la liste des candidats
+            4- quitter
+        `)
 
     let choix = NaN;
     while (choix !== 4){
