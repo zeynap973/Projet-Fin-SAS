@@ -107,27 +107,48 @@ function VoterPourCandidat(candidats) {
 
      for (let i = 0; i < candidats.length; i++){
         if (candidats[i].cin === cinCandidat){
-            candidats[i].electeurs.push(cinCandidat);
+            candidats[i].electeurs.push(cinElecteur);
 
-        console.log("Votre vote a été enregistré avec succès.");
+        console.log("Votre vote a été enregistré avec succès");
         return;
-        
-        } else {
-            console.log("Ce candidat n'existe pas");
         }
-
     }
-}  
+    console.log("Ce candidat n'existe pas");
+} 
 
+//5- Modifier les informations d'un candidat
 
+function ModifierCandidat(candidats){
+    
+    const candidatCherche = prompt("Entrer la CIN du candidat: ");
+    for( let i = 0; i < candidats.length; i++){
+        if (candidats[i].cin === candidatCherche){
+            console.log(`
+                1- Modifier le parti politique du candidat
+                2- Modifier l'âge du candidat
+                `)
+            const choixModification = Number(prompt("Entrer votre choix: "))
 
+            switch(choixModification){
 
-
-
-
-
-
-
+                case 1:
+                    const partiModifie = prompt("Entrer le nouveau parti du candidat: ");
+                    candidats[i].partiPolitique = partiModifie;
+                    break;
+                    
+                case 2:
+                    const ageModifie = Number(prompt("Entrer le nouvel âge du candidat: "));
+                    candidats[i].age = ageModifie;
+                    break;
+                    
+                default:
+                    console.log("Choix invalide")                  
+            }
+            return;
+        }
+    }
+    console.log("Ce candidat n'existe pas")
+}
 
 
 //-Le menu principal:
@@ -135,14 +156,15 @@ function VoterPourCandidat(candidats) {
 function Menu(candidats){
 
     let choix = NaN;
-    while (choix !== 4){
+    while (choix !== 6){
 
         console.log(`
             1- Ajouter un candidat
             2- Ajouter plusieurs candidats
             3- Afficher la liste des candidats
             4- Voter pour un candidat
-            5- Quitter`)
+            5- Modifier les informations d'un candidat
+            6- Quitter`)
     
         const choix = Number(prompt(`Bonjour, veuillez Entrer le numéro de votre choix: `))
             
@@ -162,8 +184,12 @@ function Menu(candidats){
         case 4:
             VoterPourCandidat(candidats);
             break;
-
+        
         case 5:
+            ModifierCandidat(candidats);
+            break;
+
+        case 6:
             console.log("Merci, au revoir!");
             return;
 
