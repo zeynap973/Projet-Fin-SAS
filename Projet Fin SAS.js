@@ -9,13 +9,13 @@ function ajouterCandidat(candidats) {
     const cin = prompt("Saisir la CIN du candidat: ");
     for (let i = 0; i < candidats.length; i++){ 
         if (candidats[i].cin === cin){
-            console.log("Impossible d'ajouter ce candidat. Cette CIN est déjà existée.")
+            console.log("Impossible d'ajouter ce candidat. Cette CIN existe déjà.")
             return;        
         }
     }
     const nom = prompt("Entrer le nom du candidat: ");
     const prenom = prompt("Entrer le prénom du candidat: ");
-    const partiPolitique = prompt("Saisir le parti politique du candidat: (ou écrire Indépendant s'il n'appartient à aucun parti): ");
+    const partiPolitique = prompt("Saisir le parti politique du candidat: (ou écrire 'Indépendant' s'il n'appartient à aucun parti): ");
     const age = Number(prompt("Saisir l'âge du candidat: "));
 
     const candidat = {
@@ -33,7 +33,7 @@ function ajouterCandidat(candidats) {
 
 function ajouterPlusCandidats(candidats){
 
-    const nombreCandidats = Number(prompt("Entrer le nombre de candidats que voulez-vous ajouter: "))
+    const nombreCandidats = Number(prompt("Entrer le nombre de candidats que vous voulez ajouter: "))
         for(let i = 0; i < nombreCandidats; i++){
             ajouterCandidat(candidats);
         }        
@@ -46,13 +46,11 @@ function afficherCandidats(candidats) {
     if (candidats.length === 0) {
         console.log("Aucun candidat n'existe dans la liste.");
 
-    } else {
-
-        const choixAffichage = Number(prompt(`
+    } else { console.log(`
             1- Trier par nombre de votes
-            2- Filtrer par parti politique
+            2- Filtrer par parti politique`)
 
-            Entrer votre choix: `));
+        const choixAffichage = Number(prompt(`Entrer votre choix: `));
 
         let listeFiltre = candidats;
 
@@ -72,7 +70,7 @@ function afficherCandidats(candidats) {
                     break;
 
             case 2:
-                const partiRecherche = prompt("Entrer le parti politique: ");
+                const partiRecherche = prompt("Chercher le parti politique: ");
                 listeFiltre = candidats.filter(personne => {return personne.partiPolitique === partiRecherche;
                 });
                 break;
@@ -84,37 +82,69 @@ function afficherCandidats(candidats) {
 
         for (let personne of listeFiltre) {
             console.log(`
-                ${personne.nom}
-                Parti:
-                ${personne.partiPolitique}
-                Votes:
-                ${personne.nombreVotes}`)
+                cin: ${personne.cin}
+                mom: ${personne.nom} 
+                prénom: ${personne.prenom}
+                parti poitiaue: ${personne.partiPolitique}
+                âge: ${personne.age}
+                nombre de votes: ${personne.nombreVotes}`)
         }   
     }
 }
+
+//4- Voter pour un candidat
+
+function VoterPourCandidat(candidats) {
+    const cinElecteur = prompt("Veuillez saisir la CIN de l'électeur: ");
+    for (let i = 0; i < candidats.length; i++)
+        for ( let j = 0; j < candidats[i].electeurs.length; j++)
+            if (candidats[i].electeurs[j] === cinElecteur){
+                console.log("Vous avez déjà voté et vous n'avez pas le droit de modifier votre vote ni de voter à nouveau");
+                return;
+            }
+
+    const cinCandidat = prompt("Veuillez saisir la CIN du candidat: ");
+
+     for (let i = 0; i < candidats.length; i++){
+        if (candidats[i].cin === cinCandidat){
+            candidats[i].electeurs.push(cinCandidat);
+
+        console.log("Votre vote a été enregistré avec succès.");
+        return;
+        
+        } else {
+            console.log("Ce candidat n'existe pas");
+        }
+
+    }
+}  
+
+
+
+
+
+
+
+
+
+
+
 
 //-Le menu principal:
 
 function Menu(candidats){
 
-    console.log(`
-        
-            1- Ajouter un candidat
-            2- Ajouter plusieurs candidats
-            3- Afficher la liste des candidats
-            4- quitter
-        `)
-
     let choix = NaN;
     while (choix !== 4){
 
-        choix = Number(prompt(`
+        console.log(`
             1- Ajouter un candidat
             2- Ajouter plusieurs candidats
             3- Afficher la liste des candidats
-            4- quitter
+            4- Voter pour un candidat
+            5- Quitter`)
     
-            Bonjour, veuillez Entrer le numéro de votre choix: `))
+        const choix = Number(prompt(`Bonjour, veuillez Entrer le numéro de votre choix: `))
             
         switch (choix) {
         case 1:
@@ -128,10 +158,14 @@ function Menu(candidats){
         case 3:
             afficherCandidats(candidats);
             break;
-            
+        
         case 4:
-            console.log("Merci, au revoir!");
+            VoterPourCandidat(candidats);
             break;
+
+        case 5:
+            console.log("Merci, au revoir!");
+            return;
 
         default:
             console.log("Choix invalide")
